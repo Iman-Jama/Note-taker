@@ -82,9 +82,9 @@ app.get('/api/notes', (req, res) => {
         fs.writeFile(
           './db/db.json',
           JSON.stringify(parsedNotes, null, 4),
-          (writeErr) =>
-            writeErr
-              ? console.error(writeErr)
+          (error) =>
+            error
+              ? console.error(error)
               : console.info('Successfully updated Notes!')
         );
       }
@@ -92,9 +92,26 @@ app.get('/api/notes', (req, res) => {
 
 });
 
-app.delete('/api/notes/:note_id', (req, res)=>
+app.delete('/api/notes/:id', (req, res)=>{
+ const noteId = req.params.id;
+ const noteIndex = activeNote.findIndex((note) => 
+ note.id === noteId);
+  
+ if (noteIndex >= 0) {
+    // Remove the note from the array
+    activeNote.splice(noteIndex, 1);
+ // Write updated reviews back to the file
+ fs.writeFile(
+  './db/db.json',
+  JSON.stringify(notes, null, 4),
+  (error) =>
+    error
+      ? console.error(error)
+      : console.info('Successfully updated Notes!')
+);
+ }});
 
-)
+
 
 
 app.listen(PORT, () =>
