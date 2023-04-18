@@ -2,8 +2,8 @@ const express = require('express');
 const app = express();
 const PORT = process.env.port || 3001;
 const path = require('path');
-const uuid = require('./helpers/uuid')
-const notes = require('./db/db.json');
+const uuid = require('./Develop/helpers/uuid')
+const notes = require('./Develop/db/db.json');
 const fs = require('fs');
 
 app.use(express.json());
