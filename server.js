@@ -21,49 +21,52 @@ app.get('/api/notes', (req, res) => {
   console.info(`${req.method} request received to get notes`);
 
   // Read the notes from the db.json file
-  fs.readFile('/Develop/db/db.json', 'utf8', (err, data) => {
+  fs.readFile('./Develop/db/db.json', 'utf8', (err, data) => {
     if (err) {
       console.error(err);
-      res.status(500).json('Error in getting notes');
-    } else {
+      return res.status(404).json('File not found');
+    };
       // Parse the data from the file into a JavaScript array
+      // console.log(data);
       const notes = JSON.parse(data);
       
       // Sending all notes to the client
-      res.json(notes);
+      
+      return res.json(notes);
+      
     }
-  });
+  )
 });
 
 
   app.post('/api/notes', (req, res) => {
     // Log that a POST request was received
     console.info(`${req.method} request received to add a note`);
-  
+    
     // Destructuring assignment for the items in req.body
     const { title, text } = req.body;
   
     // If all the required properties are present
-    if (title && text) {
-      // Variable for the object we will save
-      const newNotes = {
-        title,
-        text,
-        id: uuid(),
-      };
-
-      const response = {
-        status: 'success',
-        body: newNotes,
-      };
-  
-      console.log(response);
-      res.status(201).json(response);
-    } else {
-      res.status(500).json('Error in posting notes');
+    if (!title && !text) {
+      return res.status(500).json('Error in posting notes');
     }
+
+     // Variable for the object we will save
+     const newNotes = {
+      title,
+      text,
+      id: uuid(),
+    };
+
+    const response = {
+      status: 'success',
+      body: newNotes,
+    };
+
+    console.log(response);
+    res.status(201).json(response);
     
-    fs.readFile(('./Develop/db/db.json', 'utf8', (err, data) => {
+    fs.readFile('./Develop/db/db.json', 'utf8', (err, data) => {
       if (err) {
         console.error(err);
       } else {
@@ -88,7 +91,7 @@ app.get('/api/notes', (req, res) => {
               : console.info('Successfully updated Notes!')
         );
       }
-    }));
+    });
 
 });
 
