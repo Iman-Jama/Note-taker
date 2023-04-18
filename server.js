@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const PORT = process.env.port || 3001;
+const PORT = process.env.PORT || 3001;
 const path = require('path');
 const uuid = require('./Develop/helpers/uuid')
 const notes = require('./Develop/db/db.json');
@@ -21,7 +21,7 @@ app.get('/api/notes', (req, res) => {
   console.info(`${req.method} request received to get notes`);
 
   // Read the notes from the db.json file
-  fs.readFile('./db/db.json', 'utf8', (err, data) => {
+  fs.readFile('/Develop/db/db.json', 'utf8', (err, data) => {
     if (err) {
       console.error(err);
       res.status(500).json('Error in getting notes');
@@ -63,7 +63,7 @@ app.get('/api/notes', (req, res) => {
       res.status(500).json('Error in posting notes');
     }
     
-    fs.readFile('./db/db.json', 'utf8', (err, data) => {
+    fs.readFile(('./Develop/db/db.json', 'utf8', (err, data) => {
       if (err) {
         console.error(err);
       } else {
@@ -79,8 +79,8 @@ app.get('/api/notes', (req, res) => {
         parsedNotes.push(newNotes);
 
         // Write updated reviews back to the file
-        fs.writeFile(
-          './db/db.json',
+        fs.writeFile
+          ('./Develop/db/db.json',
           JSON.stringify(parsedNotes, null, 4),
           (error) =>
             error
@@ -88,7 +88,7 @@ app.get('/api/notes', (req, res) => {
               : console.info('Successfully updated Notes!')
         );
       }
-    });
+    }));
 
 });
 
@@ -101,8 +101,8 @@ app.delete('/api/notes/:id', (req, res)=>{
     // Remove the note from the array
     activeNote.splice(noteIndex, 1);
  // Write updated reviews back to the file
- fs.writeFile(
-  './db/db.json',
+ fs.writeFile
+  ('./Develop/db/db.json',
   JSON.stringify(notes, null, 4),
   (error) =>
     error
